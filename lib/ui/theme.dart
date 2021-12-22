@@ -7,7 +7,7 @@ const Color orangeClr = Color(0xCFFF8746);
 const Color pinkClr = Color(0xFFff4667);
 const Color white = Colors.white;
 const primaryClr = bluishClr;
-const Color darkGreyClr = Color(0xFF121212);
+Color darkGreyClr = const Color(0xFF121212).withOpacity(0.7);
 const Color darkHeaderClr = Color(0xFF424242);
 
 class Themes {
@@ -54,7 +54,7 @@ TextStyle get subTitleStyle {
     textStyle: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w400,
-        color: Get.isDarkMode ? Colors.white : Colors.black),
+        color: Get.isDarkMode ? Colors.white : darkGreyClr),
   );
 }
 

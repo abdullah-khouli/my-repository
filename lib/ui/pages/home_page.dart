@@ -33,12 +33,12 @@ class _HomePageState extends State<HomePage> {
   final TaskController _taskController = Get.put(TaskController());
   final notifiHelper = NotifyHelper();
   DatePickerController? datePickerController = DatePickerController();
-  bool showAllTasks = false;
+  bool showAllTasks = true;
   GlobalKey key = GlobalKey();
   late File _pickedFile;
   final ImagePicker _picker = ImagePicker();
   final GetStorage _box = GetStorage();
-  bool showDateBar = true;
+  // bool showDateBar = true;
   ImageProvider<Object>? img;
   _pickImage({required ImageSource src}) async {
     final _image = await _picker.pickImage(source: src, imageQuality: 25);
@@ -50,6 +50,33 @@ class _HomePageState extends State<HomePage> {
       });
     }
   }
+
+  List<Widget> tabs = <Widget>[
+    const Tab(
+      child: Text(
+        'My Tasks',
+      ),
+      // height: 40,
+    ),
+    const Tab(
+      // height: 40,
+      child: Text(
+        '+ New list',
+      ),
+    ),
+    const Tab(
+      // height: 40,
+      child: Text(
+        '+ New list',
+      ),
+    ),
+    const Tab(
+      // height: 40,
+      child: Text(
+        '+ New list',
+      ),
+    ),
+  ];
 
   @override
   void initState() {
@@ -69,30 +96,59 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  void didChangeDependencies() {
-    print('ddddddddddidchangedependec=ncies');
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return Scaffold(
-      backgroundColor: context.theme.backgroundColor,
-      appBar: _appBar(),
-      body: Column(
-        children: [
-          _addTaskBar(),
-          showDateBar ? _addDateBar() : Container(),
-          const SizedBox(height: 6),
-          _showTasks(),
-        ],
+    return DefaultTabController(
+      length: tabs.length,
+      child: Scaffold(
+        bottomSheet: TextButton(onPressed: () {}, child: Text('test')),
+        //bottomNavigationBar: _bottomNavigationBar(),
+        backgroundColor: context.theme.backgroundColor,
+        appBar: _appBar(),
+        body: Column(
+          children: [
+            //  _addTaskBar(),
+            !showAllTasks ? _addDateBar() : Container(),
+
+            const SizedBox(height: 6),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  _showTasks(),
+                  Container(),
+                  Container(),
+                  Container(),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
+  BottomNavigationBar _bottomNavigationBar() {
+    return BottomNavigationBar(items: const [
+      BottomNavigationBarItem(
+          icon: Icon(Icons.ac_unit), label: '11', tooltip: 'Lists'),
+      BottomNavigationBarItem(
+          icon: Icon(Icons.ac_unit), label: '22', tooltip: 'Add Task'),
+      BottomNavigationBarItem(
+          icon: Icon(Icons.ac_unit), label: '33', tooltip: 'list options')
+    ]);
+  }
+
   AppBar _appBar() {
     return AppBar(
+      bottom: TabBar(
+        isScrollable: tabs.length > 3 ? true : false,
+        indicatorColor: primaryClr,
+        indicatorSize: TabBarIndicatorSize.label,
+        labelColor: primaryClr,
+        unselectedLabelColor: subTitleStyle.color,
+        onTap: (index) => print(index),
+        tabs: tabs,
+      ),
       leading: Padding(
         padding: const EdgeInsets.only(left: 15),
         child: CircleAvatar(
@@ -105,22 +161,23 @@ class _HomePageState extends State<HomePage> {
           radius: 30,
         ),
       ),
-      elevation: 0,
+      elevation: 0.5,
       backgroundColor: context.theme.backgroundColor,
       actions: [
-        IconButton(
-          onPressed: () {
-            setState(() {
-              // _selectedDate = DateTime.now();
-              datePickerController!.animateToDate(DateTime.now());
-            });
-          },
-          icon: Icon(
-            Icons.restart_alt_sharp,
-            size: 18,
-            color: Get.isDarkMode ? Colors.white : darkGreyClr,
+        if (!showAllTasks)
+          IconButton(
+            onPressed: () {
+              setState(() {
+                // _selectedDate = DateTime.now();
+                datePickerController!.animateToDate(DateTime.now());
+              });
+            },
+            icon: Icon(
+              Icons.restart_alt_sharp,
+              size: 18,
+              color: Get.isDarkMode ? Colors.white : darkGreyClr,
+            ),
           ),
-        ),
         Obx(
           () => IconButton(
             onPressed: _taskController.taskList.isEmpty
@@ -188,6 +245,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         PopupMenuButton(
+          tooltip: 'show options',
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -211,8 +269,11 @@ class _HomePageState extends State<HomePage> {
                     ),
                     CircleAvatar(
                       radius: 5,
-                      backgroundColor:
-                          showAllTasks ? pinkClr : Colors.grey.withOpacity(0.7),
+                      backgroundColor: showAllTasks
+                          ? pinkClr
+                          : Get.isDarkMode
+                              ? Colors.white
+                              : darkGreyClr,
                     ),
                   ],
                 )),
@@ -231,13 +292,16 @@ class _HomePageState extends State<HomePage> {
                   ),
                   CircleAvatar(
                     radius: 5,
-                    backgroundColor:
-                        !showAllTasks ? pinkClr : Colors.grey.withOpacity(0.7),
+                    backgroundColor: !showAllTasks
+                        ? pinkClr
+                        : Get.isDarkMode
+                            ? Colors.white
+                            : darkGreyClr,
                   ),
                 ],
               ),
             ),
-            PopupMenuItem(
+            /*  PopupMenuItem(
                 height: 40,
                 onTap: () => setState(() {
                       showDateBar = !showDateBar;
@@ -250,12 +314,12 @@ class _HomePageState extends State<HomePage> {
                       style: bodyStyle,
                     ),
                     Icon(
-                      Icons.shower,
+                      showDateBar ? Icons.visibility : Icons.visibility_off,
                       size: 18,
                       color: Get.isDarkMode ? Colors.white : darkGreyClr,
                     ),
                   ],
-                )),
+                )),*/
           ],
         )
       ],
@@ -342,12 +406,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _showTasks() {
-    print('show');
-    print(datePickerController.isBlank);
-    // datePickerController!.animateToDate(DateTime
-    //   .now()); //هاد السطر مشان خلي التاريخ المحدد بأول الصفحة من اليسار
-    return Expanded(
+  Widget _showTasks() {
+    return Container(
       child: Obx(
         () {
           if (_taskController.taskList.isEmpty) {
@@ -415,7 +475,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _noTaskMsg() {
+  Widget _noTaskMsg() {
     //هون عندي مشكلة ماعم يطلع الريفرش اندكاتر
     return Stack(
       children: [
@@ -444,7 +504,15 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 30, vertical: 10),
                     child: Text(
-                      'You do not have any tasks yet!\nAdd new tasks to make your days productive ',
+                      'You do not have any tasks yet!',
+                      style: subHeadingStyle,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: Text(
+                      'Add new tasks to make your days productive',
                       style: subTitleStyle,
                       textAlign: TextAlign.center,
                     ),

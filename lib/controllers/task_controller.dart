@@ -5,6 +5,7 @@ import '../models/task.dart';
 
 class TaskController extends GetxController {
   RxList<Task> taskList = <Task>[].obs;
+  RxMap tasksLists = {}.obs;
   deleteAllTasks() async {
     await DBHelper.deleteAll();
     await getTasks();
