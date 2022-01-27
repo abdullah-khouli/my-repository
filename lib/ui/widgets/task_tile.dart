@@ -1,8 +1,12 @@
+//d
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import '../../models/task.dart';
 import 'package:to_do_app/ui/size_config.dart';
 import 'package:to_do_app/ui/theme.dart';
+import 'package:get/get.dart';
 
 class TaskTile extends StatelessWidget {
   const TaskTile(this.task, {Key? key}) : super(key: key);
@@ -10,6 +14,7 @@ class TaskTile extends StatelessWidget {
   final Task task;
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting();
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: getProportionateScreenWidth(
@@ -34,11 +39,26 @@ class TaskTile extends StatelessWidget {
                   children: [
                     Text(
                       task.title!,
+                      overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.lato(
                         textStyle: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Text(
+                      task.note!,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: GoogleFonts.lato(
+                        textStyle: TextStyle(
+                          fontSize: 15,
+                          color: Colors.grey[100],
                         ),
                       ),
                     ),
@@ -56,35 +76,56 @@ class TaskTile extends StatelessWidget {
                         const SizedBox(
                           width: 12,
                         ),
-                        Text(
-                          '${task.startTime} - ${task.endTime}',
-                          style: GoogleFonts.lato(
-                            textStyle: TextStyle(
-                              fontSize: 13,
-                              color: Colors.grey[100],
+                        Row(
+                          children: [
+                            Text(
+                              DateFormat.MMMEd(Get.locale.toString())
+                                  .format(DateTime.parse(task.date!)),
+                              style: GoogleFonts.lato(
+                                textStyle: TextStyle(
+                                  fontSize: 13,
+                                  color: Colors.grey[100],
+                                ),
+                              ),
                             ),
-                          ),
-                        )
+                            const SizedBox(width: 5),
+                            Text(
+                              ' ${task.startTime} ',
+                              style: GoogleFonts.lato(
+                                textStyle: TextStyle(
+                                  fontSize: 13,
+                                  color: Colors.grey[100],
+                                ),
+                              ),
+                            ),
+                            Text(
+                              ' - ',
+                              style: GoogleFonts.lato(
+                                textStyle: TextStyle(
+                                  fontSize: 13,
+                                  color: Colors.grey[100],
+                                ),
+                              ),
+                            ),
+                            Text(
+                              ' ${task.endTime} ',
+                              style: GoogleFonts.lato(
+                                textStyle: TextStyle(
+                                  fontSize: 13,
+                                  color: Colors.grey[100],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Text(
-                      task.note!,
-                      style: GoogleFonts.lato(
-                        textStyle: TextStyle(
-                          fontSize: 15,
-                          color: Colors.grey[100],
-                        ),
-                      ),
-                    )
                   ],
                 ),
               ),
             ),
             Container(
-              margin: EdgeInsets.symmetric(
+              margin: const EdgeInsets.symmetric(
                 horizontal: 10,
               ),
               height: 60,
@@ -94,12 +135,13 @@ class TaskTile extends StatelessWidget {
             RotatedBox(
               quarterTurns: 3,
               child: Text(
-                task.isCompleted == 0 ? 'To Do' : 'Completed',
+                task.isCompleted == 0 ? 'ToDo'.tr : 'Completed'.tr,
                 style: GoogleFonts.lato(
                   textStyle: const TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),

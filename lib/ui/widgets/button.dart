@@ -1,3 +1,4 @@
+//d
 import 'package:flutter/material.dart';
 import '../theme.dart';
 
@@ -17,13 +18,13 @@ class MyButton extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10), color: primaryClr),
         alignment: Alignment.center,
-        width: 100,
+        // width: 100,
+        padding: const EdgeInsets.symmetric(horizontal: 5),
         height: 45,
         child: Text(
           label,
           style: const TextStyle(
-            color: Colors.white,
-          ),
+              color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
         ),
       ),

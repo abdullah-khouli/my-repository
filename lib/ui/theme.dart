@@ -1,3 +1,4 @@
+//d
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,16 +8,16 @@ const Color orangeClr = Color(0xCFFF8746);
 const Color pinkClr = Color(0xFFff4667);
 const Color white = Colors.white;
 const primaryClr = bluishClr;
-Color darkGreyClr = const Color(0xFF121212).withOpacity(0.7);
+Color darkGreyClr = const Color(0xFF121212).withOpacity(0.8);
 const Color darkHeaderClr = Color(0xFF424242);
 
 class Themes {
-  static final Light = ThemeData(
+  static final light = ThemeData(
       primaryColor: primaryClr,
       backgroundColor: Colors.white,
       brightness: Brightness.light);
 
-  static final Dark = ThemeData(
+  static final dark = ThemeData(
       primaryColor: darkGreyClr,
       backgroundColor: darkGreyClr,
       brightness: Brightness.dark);

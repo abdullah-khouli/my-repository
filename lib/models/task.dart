@@ -1,5 +1,4 @@
-import 'dart:convert';
-
+//d
 class Task {
   int? id;
   String? title;
@@ -41,8 +40,8 @@ class Task {
 
   Task.fromJson(Map<String, dynamic> json) {
     id = json['id']?.toInt();
-    title = json['title'];
-    note = json['note'];
+    title = json['title'].toString();
+    note = json['note'].toString();
     isCompleted = json['isCompleted']?.toInt();
     date = json['date'];
     startTime = json['startTime'];

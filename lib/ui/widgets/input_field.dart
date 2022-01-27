@@ -1,8 +1,7 @@
+//d
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../theme.dart';
-
-import '../size_config.dart';
 
 class InputField extends StatelessWidget {
   const InputField({
@@ -11,7 +10,9 @@ class InputField extends StatelessWidget {
     required this.hint,
     this.controller,
     this.widget,
+    this.autofocus,
   }) : super(key: key);
+  final bool? autofocus;
   final String title;
   final String hint;
   final TextEditingController? controller;
@@ -23,47 +24,48 @@ class InputField extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: titleStyle,
+          Row(
+            children: [
+              Text(
+                title,
+                style: titleStyle,
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              if (widget == null)
+                Text('Required'.tr,
+                    style:
+                        titleStyle.copyWith(color: Colors.red.withOpacity(0.9)))
+            ],
           ),
-          Container(
-            margin: EdgeInsets.only(top: 8),
-            padding: const EdgeInsets.only(left: 14),
-            width: SizeConfig.screenWidth,
-            height: 52,
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextFormField(
-                    controller: controller,
-                    style: subTitleStyle,
-                    autofocus: false,
-                    readOnly: widget != null ? true : false,
-                    cursorColor:
-                        Get.isDarkMode ? Colors.grey[100] : Colors.grey[700],
-                    decoration: InputDecoration(
-                      hintText: hint,
-                      hintStyle: subTitleStyle,
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                            width: 0,
-                            color: context.theme.scaffoldBackgroundColor),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                            color: context.theme.scaffoldBackgroundColor,
-                            width: 0),
-                      ),
-                    ),
-                  ),
-                ),
-                widget ?? Container(),
-              ],
+          const SizedBox(
+            height: 10,
+          ),
+          TextFormField(
+            focusNode: FocusNode(canRequestFocus: false),
+            textAlign: Get.locale.toString() == 'ar'
+                ? TextAlign.right
+                : TextAlign.left,
+            maxLines: null,
+            controller: controller,
+            style: subTitleStyle,
+            autofocus: autofocus ?? false,
+            readOnly: widget != null ? true : false,
+            cursorColor: Get.isDarkMode ? Colors.grey[100] : Colors.grey[700],
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.all(10),
+              suffixIcon: widget,
+              hintText: hint,
+              hintStyle: subTitleStyle,
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(width: 1, color: Colors.grey),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(width: 1, color: Colors.grey),
+              ),
             ),
           ),
         ],
