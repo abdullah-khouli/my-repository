@@ -5,7 +5,7 @@ A new useful flutter application to make your days productive by scheduling your
 ## Features and Technologies :
 
 GETX State Management                                                                                                                                                   
-Localisation                                                                                   
+Localization                                                                                   
 Adiptivance                                                                          
 Responsive                                                                                                
 Light and Dark Theme                                                                                   
