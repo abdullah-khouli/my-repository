@@ -12,5 +12,6 @@ Light and Dark Theme
 Filter By Date                                                                                            
 Sqflite Local Storage                                                                                       
 MVC Architecture Pattern                                                                                                                  
-Local Notifications                                                                                                             
+Local Notifications                                                                                                                           
+Splash Screen
 
