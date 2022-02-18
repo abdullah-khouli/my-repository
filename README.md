@@ -4,8 +4,8 @@ A new useful flutter application to make your days productive by scheduling your
 
 ## Features and Technologies :
 
-Null Safety
-GETX State Management                                                                                                                                                   
+Null Safety                                                                                                                                          
+GetX State Management                                                                                                                                                   
 Localization                                                                                   
 Adiptivance                                                                          
 Responsive                                                                                                
