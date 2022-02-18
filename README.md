@@ -7,8 +7,8 @@ A new useful flutter application to make your days productive by scheduling your
 Null Safety                                                                                                                                          
 Getx State Management                                                                                                                                                   
 Localization                                                                                   
-Adiptivance                                                                          
-Responsive                                                                                                
+Adaptiveness                                                                          
+Responsivity                                                                                               
 Light and Dark Theme                                                                                   
 Filter By Date                                                                                            
 Sqflite Local Storage                                                                                       
